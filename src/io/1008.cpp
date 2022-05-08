@@ -11,9 +11,6 @@ int main(){
 	pri /= 10;
 	A = pri%10;
 	
-	cout<<fixed;
-	cout.precision(9);
-	
 	answer = A / B;
 	cout << answer << endl;
 	
