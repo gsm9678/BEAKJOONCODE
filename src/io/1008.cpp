@@ -3,13 +3,19 @@
 using namespace std;
 
 int main(){
-	int A, B, pri;
+	int pri;
+	float A, B, answer;
+	
 	cin >> pri;
 	B = pri%10;
 	pri /= 10;
 	A = pri%10;
 	
-	cout << A + B << endl;
+	cout<<fixed;
+	cout.precision(9);
+	
+	answer = A / B;
+	cout << answer << endl;
 	
 	return 0;
 }
