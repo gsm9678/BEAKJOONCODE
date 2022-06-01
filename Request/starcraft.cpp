@@ -3,10 +3,25 @@
 
 using namespace std;
 
+class StrategicResource{
+	public:
+		int _Mineral;
+    	int _Gas;
+		StrategicResource(int Mineral = 50, int Gas = 0) : _Mineral(Mineral), _Gas(Gas){}
+	
+	void AddMinerals(int M){
+		_Mineral += M;
+	}
+	
+	void AddGas(int G){
+		_Gas += G;
+	}
+};
 
-class BaseUnit {
+class BaseUnit{
 protected:
     string _name;
+	string _answer;
     int _minerals;
     int _gases;
     int _hp;
@@ -18,13 +33,14 @@ protected:
 
 
     BaseUnit(string name,
+		string answer,
         int minerals,
         int gases,
         int hp,
         int dmg,
         int def,
         int size,
-        bool canAttack) : _name(name), _minerals(minerals), _gases(gases), _hp(hp), _dmg(dmg), _def(def), _size(size), _canAttack(canAttack), _isAlive(false) {
+        bool canAttack) : _name(name), _answer(answer), _minerals(minerals), _gases(gases), _hp(hp), _dmg(dmg), _def(def), _size(size), _canAttack(canAttack), _isAlive(false) {
     }
 public:
 	
@@ -48,7 +64,7 @@ public:
 
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	virtual void produce(int& minerals, int& gases, string answer) {
+	virtual void produce(int& minerals, int& gases) {
     	if (this->_minerals > minerals) {
             cout << "Not enough minerals." << endl;
 	    }
@@ -58,7 +74,7 @@ public:
 		}
 	
 	    else {
-            cout << answer << endl;
+            cout << _answer << endl;
 			this->_isAlive = true;
 	        minerals -= this->_minerals;
 	        gases -= this->_gases;
@@ -122,12 +138,13 @@ public:
 class smallUnit : public BaseUnit {
 public:
     smallUnit(string name,
+		string answer,
         int minerals,
         int gases,
         int hp,
         int dmg,
         int def,
-        bool canAttack) : BaseUnit(name, minerals, gases, hp, dmg, def, 1, canAttack) {}
+        bool canAttack) : BaseUnit(name, answer, minerals, gases, hp, dmg, def, 1, canAttack) {}
 };
 
 
@@ -135,12 +152,13 @@ public:
 class mediumUnit : public BaseUnit {
 public:
     mediumUnit(string name,
+		string answer,
         int minerals,
         int gases,
         int hp,
         int dmg,
         int def,
-        bool canAttack) : BaseUnit(name, minerals, gases, hp, dmg, def, 2, canAttack) {}
+        bool canAttack) : BaseUnit(name, answer, minerals, gases, hp, dmg, def, 2, canAttack) {}
 };
 
 
@@ -148,18 +166,19 @@ public:
 class largeUnit : public BaseUnit {
 public:
     largeUnit(string name,
+		string answer,
         int minerals,
         int gases,
         int hp,
         int dmg,
         int def,
-        bool canAttack) : BaseUnit(name, minerals, gases, hp, dmg, def, 4, canAttack) {}
+        bool canAttack) : BaseUnit(name, answer, minerals, gases, hp, dmg, def, 4, canAttack) {}
 };
 
 
 class Marine : public smallUnit {
 public:
-    Marine() : smallUnit("Marine", 50, 0, 40, 6, 0, true) {
+    Marine() : smallUnit("Marine", "You wanna piece of me, boy?", 50, 0, 40, 6, 0, true) {
     }
 
 
@@ -191,7 +210,7 @@ public:
 
 class Tank : public largeUnit {
 public:
-    Tank() : largeUnit("Tank", 150, 50, 150, 30, 1, true) {
+    Tank() : largeUnit("Tank", "Ready to roll out!", 150, 50, 150, 30, 1, true) {
     }
 
 };
@@ -200,7 +219,7 @@ public:
 
 class Zealot : public mediumUnit {
 public:
-    Zealot() : mediumUnit("Zealot", 100, 0, 160, 16, 1, true) {
+    Zealot() : mediumUnit("Zealot", "My life for Aiur!", 100, 0, 160, 16, 1, true) {
     }
 
 
@@ -212,7 +231,7 @@ class Dragoon : public largeUnit {
 
 public:
 
-    Dragoon() : largeUnit("Dragoon", 125, 50, 180, 20, 1, true) {
+    Dragoon() : largeUnit("Dragoon", "I have returned!", 125, 50, 180, 20, 1, true) {
 		
     }
 };
@@ -228,7 +247,7 @@ protected:
 
 public:
 	
-    Dropship() : largeUnit("Dropship", 100, 100, 150, 0, 1, false), remainSize(8), index(0) {
+    Dropship() : largeUnit("Dropship", "Can I take your order?", 100, 100, 150, 0, 1, false), remainSize(8), index(0) {
 
     };
 
@@ -335,7 +354,7 @@ public:
         else {
 
             cout << "not enough empty slot" << endl;
-
+string
         }
 
     }
@@ -391,15 +410,15 @@ int main() {
 
     int gas = 1000;
 
-    marine.produce(mineral, gas, "You wanna piece of me, boy?");
+    marine.produce(mineral, gas);
 
-    tank.produce(mineral, gas, "Ready to roll out!");
+    tank.produce(mineral, gas);
 
-    zealot.produce(mineral, gas, "My life for Aiur!");
+    zealot.produce(mineral, gas);
 
-    dragoon.produce(mineral, gas, "I have returned!");
+    dragoon.produce(mineral, gas);
 
-    dropship.produce(mineral, gas, "Can I take your order?" );
+    dropship.produce(mineral, gas);
 
 
     //cout << endl;
